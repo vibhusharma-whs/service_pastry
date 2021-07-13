@@ -1,0 +1,38 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-pastry
+  namespace: service-pastry
+  labels:
+    app: service-pastry
+    subsystem: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-pastry
+      subsystem: app
+  template:
+    metadata:
+      labels:
+        app: service-pastry
+        subsystem: app
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: service-pastry
+          image: whitehatdev.azurecr.io/service-pastry
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 5000
+              hostPort: 5000
+          resources:
+            limits:
+              cpu: 4
+              memory: 1Gi
+            requests:
+              cpu: 0
+              memory: 0Mi
